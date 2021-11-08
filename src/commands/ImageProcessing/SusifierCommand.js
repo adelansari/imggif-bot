@@ -7,5 +7,11 @@ module.exports = class SusifierCommand extends BaseCommand {
 
   run(client, message, args) {
     message.channel.send('susifier command works');
+
+    twerk_frame_count = 6  // 0.png to 5.png
+    
+    // Loading frames:
+
+
   }
 }
