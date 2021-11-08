@@ -1,1 +1,1 @@
-# img-gifarray
+# imggif-bot
