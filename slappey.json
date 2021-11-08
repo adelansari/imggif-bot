@@ -1,0 +1,6 @@
+{
+  "name": "imggif-bot",
+  "language": "javascript",
+  "manager": "yarn",
+  "prefix": "."
+}
