@@ -9,7 +9,7 @@ module.exports = class SusifierCommand extends BaseCommand {
   async run (client, message, args) {
     message.channel.send('susifier command works');
 
-    twerk_frame_count = 6;  // 0.png to 5.png
+    const twerk_frame_count = 6;  // 0.png to 5.png
 
     const messageAttachment = message.attachments.size > 0 ? message.attachments.array()[0].url : null;
     // Exit if there is no message attachment present in the message
