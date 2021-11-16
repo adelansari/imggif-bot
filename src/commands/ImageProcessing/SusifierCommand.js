@@ -1,9 +1,8 @@
 const BaseCommand = require("../../utils/structures/BaseCommand");
 const { Client, Message, MessageAttachment } = require("discord.js");
 const Canvas = require("canvas");
-const path = require('path')
-const fs = require('fs')
-
+const path = require("path");
+const fs = require("fs");
 
 module.exports = class SusifierCommand extends BaseCommand {
   constructor() {
@@ -20,11 +19,8 @@ module.exports = class SusifierCommand extends BaseCommand {
 
     // message.channel.send(attachedImage);
 
-
-    const canvas = Canvas.createCanvas(64, 64);
-
-    
-
+    // Creating a canvas of 64x64 from the attached image
+    const canvas = Canvas.createCanvas(128, 128);
     const ctx = canvas.getContext("2d");
     const background = await Canvas.loadImage(attachedImage);
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
@@ -36,22 +32,33 @@ module.exports = class SusifierCommand extends BaseCommand {
     );
     message.channel.send({ files: [attachment] });
 
+    // invert colors
+    for (var i = 0; i < imgData.data.length; i += 4) {
+      imgData.data[i] = 255 - imgData.data[i];
+      imgData.data[i + 1] = 255 - imgData.data[i + 1];
+      imgData.data[i + 2] = 255 - imgData.data[i + 2];
+      imgData.data[i + 3] = 255;
+    }
+
+    ctx.putImageData(imgData, 0, 0);
+    message.channel.send({ files: [attachment] });
+
+
     const twerk_frame_count = 6; // 0.png to 5.png
-    const twerk_file_path = "/twerk_imgs/"
+    const twerk_file_path = "/twerk_imgs/";
     // const imageDir = path.join(__dirname, `.${twerk_file_path}`);
     // const twerk_img = fs.readdirSync(imageDir);
-    
 
-
+    /* 
+    // Stuff I wrote that doesn't work as intended:
+    //
 
     // Changing image color:
     function draw() {
       // draw image
       ctx.drawImage(this, 0, 0);
-    
       // set composite mode
       ctx.globalCompositeOperation = "source-in";
-    
       // draw color
       ctx.fillStyle = "#09f";
       ctx.fillRect(0, 0, c.width, c.height);
@@ -71,9 +78,9 @@ module.exports = class SusifierCommand extends BaseCommand {
     console.log(twerk_img[1])
     message.channel.send("Message", {files: [`${twerk_img[1]}`]});
     message.channel.send("Message", {files: [`${ohno[1]}`]});
-    
 
-    
-
+    //
+    //
+    */
   }
 };
