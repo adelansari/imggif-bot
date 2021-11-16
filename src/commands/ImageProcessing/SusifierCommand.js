@@ -32,15 +32,31 @@ module.exports = class SusifierCommand extends BaseCommand {
     );
     message.channel.send({ files: [attachment] });
 
+    // Getting the color value per pixel
+    const data = ctx.getImageData(X, Y, 1, 1).data;
+
     // invert colors
     for (var i = 0; i < imgData.data.length; i += 4) {
-      imgData.data[i] = 255 - imgData.data[i];
-      imgData.data[i + 1] = 255 - imgData.data[i + 1];
-      imgData.data[i + 2] = 255 - imgData.data[i + 2];
-      imgData.data[i + 3] = 255;
+      imgData.data[i] = 255 - imgData.data[i];  // RED
+      imgData.data[i + 1] = 255 - imgData.data[i + 1];  // GREEN
+      imgData.data[i + 2] = 255 - imgData.data[i + 2];  // BLUE
+      imgData.data[i + 3] = 255;  // ALPHA
     }
 
     ctx.putImageData(imgData, 0, 0);
+
+    // 128 is the height of the rescaled image:
+    // formula to find the color value of a given pixel in the array: x+y*width*4
+    const imageDetailedData = []
+    for (let y = 0; y < canvas.height; y++) {
+      for (let x = 0; x < canvas.width; x++) {
+        const index = ( x + y * width ) * 4;
+      }
+    }
+
+    
+
+
     message.channel.send({ files: [attachment] });
 
 
