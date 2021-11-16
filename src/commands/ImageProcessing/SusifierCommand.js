@@ -1,23 +1,79 @@
-const BaseCommand = require('../../utils/structures/BaseCommand');
-// const { Client, Message, MessageAttachment} = require("discord.js")
+const BaseCommand = require("../../utils/structures/BaseCommand");
+const { Client, Message, MessageAttachment } = require("discord.js");
+const Canvas = require("canvas");
+const path = require('path')
+const fs = require('fs')
+
 
 module.exports = class SusifierCommand extends BaseCommand {
   constructor() {
-    super('susifier', 'ImageProcessing', []);
+    super("susifier", "ImageProcessing", ["sus"]);
   }
 
-  async run (client, message, args) {
-    message.channel.send('susifier command works');
+  async run(client, message, args) {
+    if (message.author.bot) return false;
+    if (message.attachments.size == 0) {
+      return message.channel.send("No attachments in this message.");
+    }
 
-    const twerk_frame_count = 6;  // 0.png to 5.png
+    const attachedImage = message.attachments.first().url; // saving the image sent by the user
 
-    const messageAttachment = message.attachments.size > 0 ? message.attachments.array()[0].url : null;
-    // Exit if there is no message attachment present in the message
-    if (!messageAttachment) return;
+    // message.channel.send(attachedImage);
 
 
-    // Loading frames:
+    const canvas = Canvas.createCanvas(64, 64);
 
+    
+
+    const ctx = canvas.getContext("2d");
+    const background = await Canvas.loadImage(attachedImage);
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+    const attachment = new MessageAttachment(
+      canvas.toBuffer(),
+      "sussified.png"
+    );
+    message.channel.send({ files: [attachment] });
+
+    const twerk_frame_count = 6; // 0.png to 5.png
+    const twerk_file_path = "/twerk_imgs/"
+    // const imageDir = path.join(__dirname, `.${twerk_file_path}`);
+    // const twerk_img = fs.readdirSync(imageDir);
+    
+
+
+
+    // Changing image color:
+    function draw() {
+      // draw image
+      ctx.drawImage(this, 0, 0);
+    
+      // set composite mode
+      ctx.globalCompositeOperation = "source-in";
+    
+      // draw color
+      ctx.fillStyle = "#09f";
+      ctx.fillRect(0, 0, c.width, c.height);
+    }
+
+    const twerk_img = []
+    const ohno = []
+    for (let i = 0; i < twerk_frame_count; i++) {
+      try {
+        twerk_img[i] = path.join(__dirname,`.${twerk_file_path}`+i+".png"); // storing all twerk frames
+        ohno[i] = draw(Canvas.loadImage(twerk_img[i]))
+      }
+      catch(err) {
+        console.log("Error loading twerk frames.")
+      }
+    }
+    console.log(twerk_img[1])
+    message.channel.send("Message", {files: [`${twerk_img[1]}`]});
+    message.channel.send("Message", {files: [`${ohno[1]}`]});
+    
+
+    
 
   }
-}
+};
