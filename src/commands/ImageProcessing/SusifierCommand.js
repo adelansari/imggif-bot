@@ -3,6 +3,7 @@ const { Client, Message, MessageAttachment } = require("discord.js");
 const Canvas = require("canvas");
 const path = require("path");
 const fs = require("fs");
+// const { readFileSync } = require("fs");
 const probe = require('probe-image-size');
 
 module.exports = class SusifierCommand extends BaseCommand {
@@ -26,11 +27,16 @@ module.exports = class SusifierCommand extends BaseCommand {
     const sentImgHeight = dimensions.height;
     console.log(sentImgHeight)
 
+    // rescaling the image based on width = 128 to create a canvas of "width x height: 128 x ?"
+    const canvas_initial_width = 128;
+    const canvas_initial_height = canvas_initial_width * sentImgHeight / sentImgWidth;
+
+
     // message.channel.send(attachedImage);
 
     // Creating a canvas of 64x64 from the attached image
     // const canvas = Canvas.createCanvas(128, 128);
-    const canvas = Canvas.createCanvas(128, 128);
+    const canvas = Canvas.createCanvas(canvas_initial_width, canvas_initial_height);
     const ctx = canvas.getContext("2d");
     const background = await Canvas.loadImage(attachedImage);
     ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
@@ -52,8 +58,6 @@ module.exports = class SusifierCommand extends BaseCommand {
     // Pixelating the image:
 
   
-
-
 
     // invert colors
     for (var i = 0; i < imgData.data.length; i += 4) {
@@ -81,22 +85,26 @@ module.exports = class SusifierCommand extends BaseCommand {
       }
     }
 
-
     // twerk image:
     const twerk_frame_count = 6; // 0.png to 5.png
     const twerk_file_path = "/twerk_imgs/";
     const susImageDir = path.join(__dirname, `.${twerk_file_path}`);
-    const twerkSusImg = fs.readFileSync(susImageDir);
+    const twerkSusImg = fs.readFileSync(`${susImageDir}/0.png`);
     const twrkImgData = probe.sync(twerkSusImg);
-
 
     // gif output:
     const twerk_height = twrkImgData.height;
     const twerk_width = twrkImgData.width;
     const output_width = 20;
-    const output_width_px = output_width * twerk_width;
     const output_height = output_width * (sentImgWidth / sentImgHeight) * (twerk_width / twerk_height);
+    const output_width_px = output_width * twerk_width;
     const output_height_px = output_height * twerk_height;
+
+    // New canvas size:
+    canvas.width = output_width_px
+    canvas.height = output_height_px
+
+
     
 
 
