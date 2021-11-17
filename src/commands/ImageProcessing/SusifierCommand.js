@@ -3,7 +3,7 @@ const { Client, Message, MessageAttachment } = require("discord.js");
 const Canvas = require("canvas");
 const path = require("path");
 const fs = require("fs");
-const sizeOf = require('image-size')
+const probe = require('probe-image-size');
 
 module.exports = class SusifierCommand extends BaseCommand {
   constructor() {
@@ -18,9 +18,12 @@ module.exports = class SusifierCommand extends BaseCommand {
 
     const attachedImage = message.attachments.first().url; // saving the image sent by the user
 
-    const sentImgWidth = attachedImage.width;
+    const dimensions = await probe(attachedImage);
+    console.log(dimensions);
+
+    const sentImgWidth = dimensions.width;
     console.log(sentImgWidth)
-    const sentImgHeight = attachedImage.height;
+    const sentImgHeight = dimensions.height;
     console.log(sentImgHeight)
 
     // message.channel.send(attachedImage);
@@ -78,13 +81,26 @@ module.exports = class SusifierCommand extends BaseCommand {
       }
     }
 
+
+    // twerk image:
     const twerk_frame_count = 6; // 0.png to 5.png
     const twerk_file_path = "/twerk_imgs/";
+    const susImageDir = path.join(__dirname, `.${twerk_file_path}`);
+    const twerkSusImg = fs.readFileSync(susImageDir);
+    const twrkImgData = probe.sync(twerkSusImg);
+
 
     // gif output:
+    const twerk_height = twrkImgData.height;
+    const twerk_width = twrkImgData.width;
     const output_width = 20;
-    const output_width_px = 20
-    const output_height = output_width * (input_height / input_width) * (twerk_width / twerk_height);
+    const output_width_px = output_width * twerk_width;
+    const output_height = output_width * (sentImgWidth / sentImgHeight) * (twerk_width / twerk_height);
+    const output_height_px = output_height * twerk_height;
+    
+
+
+
     
 
 
