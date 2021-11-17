@@ -85,24 +85,21 @@ module.exports = class SusifierCommand extends BaseCommand {
       }
     }
 
+
     // twerk image:
-    const twerk_frame_count = 6; // 0.png to 5.png
+    // const twerk_frame_count = 6; // 0.png to 5.png
     const twerk_file_path = "/twerk_imgs/";
     const susImageDir = path.join(__dirname, `.${twerk_file_path}`);
-    const twerkSusImg = fs.readFileSync(`${susImageDir}/0.png`);
+    const twerkSusImg = fs.readFileSync(`${susImageDir}/sus.gif`);
     const twrkImgData = probe.sync(twerkSusImg);
 
-    // gif output:
+    // gif dimention:
     const twerk_height = twrkImgData.height;
     const twerk_width = twrkImgData.width;
-    const output_width = 20;
-    const output_height = output_width * (sentImgWidth / sentImgHeight) * (twerk_width / twerk_height);
-    const output_width_px = output_width * twerk_width;
-    const output_height_px = output_height * twerk_height;
 
-    // New canvas size:
-    canvas.width = output_width_px
-    canvas.height = output_height_px
+ 
+
+
 
 
     
