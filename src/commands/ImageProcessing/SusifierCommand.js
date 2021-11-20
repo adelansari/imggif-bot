@@ -53,19 +53,19 @@ module.exports = class SusifierCommand extends BaseCommand {
     // Getting the color value per pixel
     const xCoord = 0;
     const yCoord = 0;
-    const data = ctx.getImageData(xCoord, yCoord, 1, 1).data;
+      const data = ctx.getImageData(xCoord, yCoord, 1, 1).data;
 
-    // Pixelating the image:
+      // Pixelating the image:
 
-  
-
+    
+     
     // invert colors
     for (var i = 0; i < imgData.data.length; i += 4) {
       imgData.data[i] = 255 - imgData.data[i]; // RED
       imgData.data[i + 1] = 255 - imgData.data[i + 1]; // GREEN
       imgData.data[i + 2] = 255 - imgData.data[i + 2]; // BLUE
       imgData.data[i + 3] = 255; // ALPHA
-    }
+      }
 
     ctx.putImageData(imgData, 0, 0);
 
@@ -83,15 +83,19 @@ module.exports = class SusifierCommand extends BaseCommand {
       for (let x = 0; x < canvas.width; x++) {
         const index = (x + y * canvas.width) * 4;
       }
-    }
+      }
 
+      // sample gif link - https://media.tenor.com/images/b01bcfdc8fee4ffecd13182d575ccba6/tenor.gif
 
     // twerk image:
     // const twerk_frame_count = 6; // 0.png to 5.png
     const twerk_file_path = "/twerk_imgs/";
     const susImageDir = path.join(__dirname, `.${twerk_file_path}`);
     const twerkSusImg = fs.readFileSync(`${susImageDir}/sus.gif`);
-    const twrkImgData = probe.sync(twerkSusImg);
+      const twrkImgData = probe.sync(twerkSusImg);
+
+      const twerk_gif = new MessageAttachment("./src/commands/ImageProcessing/twerk_imgs/sus.gif")
+      await message.channel.send({ files: [twerk_gif] });
 
     // gif dimention:
     const twerk_height = twrkImgData.height;
