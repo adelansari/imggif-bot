@@ -1,4 +1,5 @@
 const BaseCommand = require('../../utils/structures/BaseCommand');
+const { Client, Message, MessageAttachment } = require("discord.js");
 const Canvas = require("canvas");
 const path = require("path");
 const fs = require("fs");
