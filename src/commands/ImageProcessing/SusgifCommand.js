@@ -9,7 +9,7 @@ module.exports = class SusgifCommand extends BaseCommand {
     super('susgif', 'ImageProcessing', ["sus"]);
   }
 
-  run(client, message, args) {
+  async run(client, message, args) {
     message.channel.send('susgif command works');
 
     if (message.author.bot) return false;
