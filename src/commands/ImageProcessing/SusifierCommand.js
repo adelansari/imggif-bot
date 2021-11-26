@@ -9,7 +9,7 @@ const CanvasGifEncoder = require("canvas-gif-encoder");
 
 module.exports = class SusifierCommand extends BaseCommand {
   constructor() {
-    super("susifier", "ImageProcessing", ["sus"]);
+    super("susifier", "ImageProcessing", []);
   }
 
   async run(client, message, args) {
