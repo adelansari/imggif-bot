@@ -17,7 +17,6 @@ module.exports = class SusifierCommand extends BaseCommand {
     if (message.attachments.size == 0) {
       return message.channel.send("No attachments in this message.");
     }
-
     const attachedImage = message.attachments.first().url; // Saving the image sent by the user
 
     // Finding dimensions:
