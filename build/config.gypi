@@ -353,7 +353,6 @@
     "want_separate_host_toolset": 0,
     "nodedir": "C:\\Users\\adela\\AppData\\Local\\node-gyp\\Cache\\17.1.0",
     "standalone_static_library": 1,
-    "msbuild_path": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe",
-    "GTK_Root": "C:\\GTK"
+    "msbuild_path": "C:\\Program Files (x86)\\Microsoft Visual Studio\\2019\\BuildTools\\MSBuild\\Current\\Bin\\MSBuild.exe"
   }
 }
